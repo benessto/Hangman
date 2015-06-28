@@ -1,14 +1,11 @@
-$chances = 5
-$words = ["game", "germany", "university", "bremen", "webdeveloptment", "ruby", "hangman"]
-
-$current_word = ""
-$guessed_chars_hash = Hash.new("no")
-$check
-
-
 
 class Hangman
 
+  $chances = 5
+  $words = ["game", "germany", "university", "bremen", "webdeveloptment", "ruby", "hangman"]
+
+  $current_word = ""
+  $guessed_chars_hash = Hash.new(false)
 
   def select_word
     $current_word = $words[rand($words.length)]
@@ -16,8 +13,9 @@ class Hangman
 
   def display_game
     text = ""
+
     $current_word.split("").each do |i|
-      if $guessed_chars_hash[i] == "no"
+      if !$guessed_chars_hash[i]
         text += "_ "
       else
         text += i + " "
@@ -36,7 +34,7 @@ class Hangman
     if guess.length > 1
       if guess == $current_word
         $current_word.split("").each do |i|
-          $guessed_chars_hash[i] = "yes"
+          $guessed_chars_hash[i] = true
         end
         $hangman.display_game
         puts "You guessed the word!"
@@ -49,7 +47,7 @@ class Hangman
 
     $current_word.split("").each do |i|
       if guess == i
-        $guessed_chars_hash[guess] = "yes"
+        $guessed_chars_hash[guess] = true
         correct = true
         break
       end
@@ -74,16 +72,11 @@ class Hangman
       return
     end
 
-    $check = true
+    completed = !$current_word.each_char.detect { |i|
+      $guessed_chars_hash[i] == false
+    }
 
-    $current_word.split("").each do |i|
-      if $guessed_chars_hash[i] == "no"
-        $check = false
-        break
-      end
-    end
-
-    if $check
+    if completed
       $hangman.display_game
       puts "You guessed the word!"
       $hangman.playAgain
@@ -99,7 +92,7 @@ class Hangman
     answer.downcase
     if answer == "yes"
       $chances = 5
-      $guessed_chars_hash = Hash.new("no")
+      $guessed_chars_hash = Hash.new(false)
       $hangman.select_word
       $hangman.display_game
       $hangman.askInput
