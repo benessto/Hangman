@@ -1,5 +1,5 @@
 $chances = 5
-$words = ["swag", "yolo", "university", "bremen", "webentwicklung", "ruby", "answer"]
+$words = ["game", "germany", "university", "bremen", "webdeveloptment", "ruby", "hangman"]
 
 $current_word = ""
 $guessed_chars_hash = Hash.new("no")
