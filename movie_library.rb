@@ -31,15 +31,20 @@ class MovieLibrary
   end
 
   def addMovie(movie, rating)
-
+    @movies[movie] = rating
   end
 
   def showMovies
-
+    string = nil
+    @movies.each do |value, key|
+      string = value+": "+key.to_s
+      puts string
+    end
+    string
   end
 
   def getRating(movie)
-
+    @movies[movie]
   end
 
 end
